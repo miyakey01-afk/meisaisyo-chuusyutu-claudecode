@@ -1,0 +1,1247 @@
+app:
+  description: 各社ごとにノードを分岐してエラーを減らす+明細を定型フォーマットに落とす
+  icon: ec26cde1-baa4-4bea-88ea-06e751be3213
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 【1008】明細抽出くん Ver2（ノード分岐）
+  use_icon_as_answer_icon: false
+dependencies:
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: bowenliang123/md_exporter:3.4.0@a5ce3ac3114f3dd6ab4fe49f0bb931a31af49ff555e479ec45e8aaa5d44157ee
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/gemini:0.7.0@0d2058fc3e1a7aa93a3749d59d93bdfee25eeb873352ff943918ba6b5bc15ac9
+    version: null
+- current_identifier: null
+  type: marketplace
+  value:
+    marketplace_plugin_unique_identifier: langgenius/openai:0.2.8@aae2be0913b8c6f0b80cff58e08d7a8b4c214569b41778413fcaea204561ff16
+    version: null
+kind: app
+version: 0.5.0
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        attachment_image_file_size_limit: 2
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        file_upload_limit: 50
+        image_file_batch_limit: 10
+        image_file_size_limit: 10
+        single_chunk_attachment_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: start
+        targetType: llm
+      id: 1763681358412-source-1763681364596-target
+      selected: false
+      source: '1763681358412'
+      sourceHandle: source
+      target: '1763681364596'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: end
+      id: 1763682786853-source-1763681480401-target
+      selected: false
+      source: '1763682786853'
+      sourceHandle: source
+      target: '1763681480401'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: tool
+        targetType: template-transform
+      id: 1763682786853-fail-branch-1764721294262-target
+      selected: false
+      source: '1763682786853'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: end
+      id: 1764721294262-source-1764721117324-target
+      selected: false
+      source: '1764721294262'
+      sourceHandle: source
+      target: '1764721117324'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764727102859-source-1764728717913-target
+      selected: false
+      source: '1764727102859'
+      sourceHandle: source
+      target: '1764728717913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: template-transform
+        targetType: tool
+      id: 1764728717913-source-1763682786853-target
+      selected: false
+      source: '1764728717913'
+      sourceHandle: source
+      target: '1763682786853'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764727111543-source-1764728717913-target
+      selected: false
+      source: '1764727111543'
+      sourceHandle: source
+      target: '1764728717913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734254088-source-1764728717913-target
+      selected: false
+      source: '1764734254088'
+      sourceHandle: source
+      target: '1764728717913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734260045-source-1764728717913-target
+      selected: false
+      source: '1764734260045'
+      sourceHandle: source
+      target: '1764728717913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734264633-source-1764728717913-target
+      selected: false
+      source: '1764734264633'
+      sourceHandle: source
+      target: '1764728717913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734382655-source-1764728717913-target
+      selected: false
+      source: '1764734382655'
+      sourceHandle: source
+      target: '1764728717913'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        isInLoop: false
+        sourceType: llm
+        targetType: if-else
+      id: 1763681364596-source-1764739779573-target
+      selected: false
+      source: '1763681364596'
+      sourceHandle: source
+      target: '1764739779573'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1764739779573-true-1764727102859-target
+      selected: false
+      source: '1764739779573'
+      sourceHandle: 'true'
+      target: '1764727102859'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1764739779573-f4afebb4-bceb-4231-ac28-38912b37c81b-1764727111543-target
+      selected: false
+      source: '1764739779573'
+      sourceHandle: f4afebb4-bceb-4231-ac28-38912b37c81b
+      target: '1764727111543'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1764739779573-f2ad7b7d-3628-4778-babc-4a22a21d2860-1764734254088-target
+      selected: false
+      source: '1764739779573'
+      sourceHandle: f2ad7b7d-3628-4778-babc-4a22a21d2860
+      target: '1764734254088'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1764739779573-6bb496c6-cd89-4d53-a0d1-4b7588e133e9-1764734260045-target
+      selected: false
+      source: '1764739779573'
+      sourceHandle: 6bb496c6-cd89-4d53-a0d1-4b7588e133e9
+      target: '1764734260045'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1764739779573-2ccce32e-6f71-4608-829a-70ef984196fa-1764734264633-target
+      source: '1764739779573'
+      sourceHandle: 2ccce32e-6f71-4608-829a-70ef984196fa
+      target: '1764734264633'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: if-else
+        targetType: llm
+      id: 1764739779573-false-1764734382655-target
+      source: '1764739779573'
+      sourceHandle: 'false'
+      target: '1764734382655'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764727102859-fail-branch-1764721294262-target
+      source: '1764727102859'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764727111543-fail-branch-1764721294262-target
+      source: '1764727111543'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734254088-fail-branch-1764721294262-target
+      source: '1764734254088'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734260045-fail-branch-1764721294262-target
+      source: '1764734260045'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734264633-fail-branch-1764721294262-target
+      source: '1764734264633'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1764734382655-fail-branch-1764721294262-target
+      source: '1764734382655'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInLoop: false
+        sourceType: llm
+        targetType: template-transform
+      id: 1763681364596-fail-branch-1764721294262-target
+      source: '1763681364596'
+      sourceHandle: fail-branch
+      target: '1764721294262'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        selected: false
+        title: ユーザー入力
+        type: start
+        variables:
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          - document
+          allowed_file_upload_methods:
+          - local_file
+          default: ''
+          hint: ''
+          label: 明細書をPDFか写メでアップしてください（同時10枚まで）
+          max_length: 10
+          options: []
+          placeholder: ''
+          required: true
+          type: file-list
+          variable: file
+      height: 109
+      id: '1763681358412'
+      position:
+        x: 79
+        y: 282
+      positionAbsolute:
+        x: 79
+        y: 282
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gemini-2.5-flash
+          provider: langgenius/gemini/google
+        prompt_template:
+        - id: 0fd6d9e3-54cf-4bb0-858c-1e7ff04aceb6
+          role: system
+          text: 'あなたは電話料金明細書からデータを抽出するアシスタントです。
+
+            入力されるのは、1社または複数社の電話料金明細を含む PDF または画像です。
+
+
+            入力されたPDFまたは画像の内容を、できるだけ忠実に日本語テキストとして出力してください。
+
+            書式は気にせず、すべてのページを順番にテキスト化するだけで構いません。
+
+            説明や要約は不要です。'
+        - id: 6896fb3e-a060-4155-8cb1-fab0cd0f0af9
+          role: user
+          text: '{{#1763681358412.file#}}'
+        selected: false
+        title: OCR
+        type: llm
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: true
+      height: 124
+      id: '1763681364596'
+      position:
+        x: 382
+        y: 303
+      positionAbsolute:
+        x: 382
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1763682786853'
+          - files
+          value_type: array[file]
+          variable: text
+        selected: false
+        title: 出力
+        type: end
+      height: 88
+      id: '1763681480401'
+      position:
+        x: 1917.0659406174545
+        y: 303
+      positionAbsolute:
+        x: 1917.0659406174545
+        y: 303
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        error_strategy: fail-branch
+        is_team_authorization: true
+        paramSchemas:
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: 'Input text of single or multiple Markdown tables, with worksheets
+              supported. All the heading texts (eg. #, ##) will be used as worksheet
+              names in order.'
+            ja_JP: 'Input text of single or multiple Markdown tables, with worksheets
+              supported. All the heading texts (eg. #, ##) will be used as worksheet
+              names in order.'
+            pt_BR: 'Input text of single or multiple Markdown tables, with worksheets
+              supported. All the heading texts (eg. #, ##) will be used as worksheet
+              names in order.'
+            zh_Hans: '单个或多个 Markdown 表格的文本输入，支持工作表。所有标题文本（例如 #, ##）将依次用作工作表名称。'
+          label:
+            en_US: Markdown table text
+            ja_JP: Markdown table text
+            pt_BR: Markdown table text
+            zh_Hans: Markdown 表格文本
+          llm_description: ''
+          max: null
+          min: null
+          name: md_text
+          options: []
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: string
+        - auto_generate: null
+          default: 'true'
+          form: form
+          human_description:
+            en_US: Convert cell values into text type to void decimal precision loss
+              in display
+            ja_JP: Convert cell values into text type to void decimal precision loss
+              in display
+            pt_BR: Convert cell values into text type to void decimal precision loss
+              in display
+            zh_Hans: 转换单元格值为文本类型，避免显示时的小数精度丢失
+          label:
+            en_US: Enforce text type
+            ja_JP: Enforce text type
+            pt_BR: Enforce text type
+            zh_Hans: 强制单元格值为文本类型
+          llm_description: Whether to convert cell values into string type, default
+            to "true"
+          max: null
+          min: null
+          name: force_text_value
+          options:
+          - icon: ''
+            label:
+              en_US: 'Yes'
+              ja_JP: 'Yes'
+              pt_BR: 'Yes'
+              zh_Hans: 是
+            value: 'true'
+          - icon: ''
+            label:
+              en_US: 'No'
+              ja_JP: 'No'
+              pt_BR: 'No'
+              zh_Hans: 否
+            value: 'false'
+          placeholder: null
+          precision: null
+          required: true
+          scope: null
+          template: null
+          type: select
+        - auto_generate: null
+          default: null
+          form: llm
+          human_description:
+            en_US: Optional custom output file name, and the filename suffix is not
+              required.
+            ja_JP: Optional custom output file name, and the filename suffix is not
+              required.
+            pt_BR: Optional custom output file name, and the filename suffix is not
+              required.
+            zh_Hans: 可选的自定义输出文件名，后缀名无需指定
+          label:
+            en_US: Output Filename
+            ja_JP: Output Filename
+            pt_BR: Output Filename
+            zh_Hans: 输出文件名
+          llm_description: ''
+          max: null
+          min: null
+          name: output_filename
+          options: []
+          placeholder: null
+          precision: null
+          required: false
+          scope: null
+          template: null
+          type: string
+        params:
+          force_text_value: ''
+          md_text: ''
+          output_filename: ''
+        plugin_id: bowenliang123/md_exporter
+        plugin_unique_identifier: bowenliang123/md_exporter:2.0.0@13e1aca1995328e41c080ff9f7f6d898df60ff74a3f4d98d6de4b18ab5b92c2e
+        provider_icon: https://cloud.dify.ai/console/api/workspaces/current/plugin/icon?tenant_id=3a3a5d89-a565-4c44-b6e9-28ed16f6fd6d&filename=f0bad95cda1671b4e49f0e05df6122ef9ec5d554e138f128795d11d3806c00ef.svg
+        provider_id: bowenliang123/md_exporter/md_exporter
+        provider_name: bowenliang123/md_exporter/md_exporter
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 1000
+        selected: false
+        title: Markdown to XLSX file
+        tool_configurations:
+          force_text_value:
+            type: constant
+            value: 'false'
+        tool_description: Generate XLSX file from Markdown tables
+        tool_label: Markdown to XLSX file
+        tool_name: md_to_xlsx
+        tool_node_version: '2'
+        tool_parameters:
+          md_text:
+            type: mixed
+            value: '{{#1764728717913.output#}}'
+          output_filename:
+            type: mixed
+            value: 明細書EXCEL出力
+        type: tool
+      height: 124
+      id: '1763682786853'
+      position:
+        x: 1599.518483594847
+        y: 303
+      positionAbsolute:
+        x: 1599.518483594847
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        outputs:
+        - value_selector:
+          - '1764721294262'
+          - output
+          value_type: string
+          variable: output
+        selected: false
+        title: 出力 2
+        type: end
+      height: 88
+      id: '1764721117324'
+      position:
+        x: 2216.655069795407
+        y: 435.8575956313586
+      positionAbsolute:
+        x: 2216.655069795407
+        y: 435.8575956313586
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        template: "ファイルの処理に失敗しました。\r\n\r\nPDFや画像の容量が大きすぎる、またはページ数が多すぎる可能性があります。\r\n\
+          お手数ですが、次のいずれかの方法をお試しください。\r\n\r\n- ファイルを圧縮する（PDF圧縮でWeb検索しI Love PDFなどのwebサイトで圧縮）\r\
+          \n- PDFを数ページごとに分割して、1ファイルずつアップロードする\r\n- 画像の場合はファイルサイズを小さくしてから再アップロードする（画像圧縮でWeb検索しI\
+          \ Love IMGなどのwebサイトで圧縮）\r\n\r\n※特に最近のiphoneの画像は高画質なためエラーが出る場合があります。\r\n\r\
+          \nその他、うまく行かない場合は三宅まで連絡下さい"
+        title: テンプレート
+        type: template-transform
+        variables: []
+      height: 52
+      id: '1764721294262'
+      position:
+        x: 1917.0659406174545
+        y: 582.9806408284036
+      positionAbsolute:
+        x: 1917.0659406174545
+        y: 582.9806408284036
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4.1
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 2acf6f1d-1211-4b86-a455-6cffb418730e
+          role: system
+          text: "あなたは電話料金明細書からデータを抽出するアシスタントです。\nこのノードは「NTT東日本／NTT西日本／NTTコミュニケーションズ」の明細だけを担当します。\n\
+            \n==============================\n【1. 出力フォーマット】\n==============================\n\
+            \n次の4列を持つ Markdown 表の **データ行だけ** を出力してください。\n\n| 番号 | サービス | 金額(円) | 備考\
+            \ |\n\n- **ヘッダー行（「| 番号 | サービス | …」の行）は絶対に出力しないこと。**\n- 各行は必ず `| 番号 | サービス\
+            \ | 金額(円) | 備考 |` の形式で出力すること。\n- 表以外のテキスト（説明文、コメント、サンプル、コードブロック、\n  「入力：」「出力：」という文字列など）は一切出力してはいけません。\n\
+            - 行と行の間に空行を入れないでください。\n- 「金額(円)」は、カンマや「円」などを除いた半角数字のみとし、\n  マイナスは `-1234`\
+            \ のようにマイナス記号付きの数字にすること。\n\n==============================\n【2. 抽出ルール】\n\
+            ==============================\n\n1. **番号（電話番号）の特定**\n\n- 「お客さま番号」「ご利用番号」「電話番号\
+            \ は」「ご契約電話番号」などのラベル近くにある、\n  `0X-XXXX-XXXX` または `0XX-XXX-XXXX` の形式の番号を、そのブロックの「番号」とします。\n\
+            - 同じ番号に対して複数のサービス行が続く場合、そのサービス行では同じ「番号」を繰り返して構いません。\n\n2. **サービス行の抽出**\n\
+            \n- 次のような「サービス名＋金額」の行をすべて対象とします。\n  - 電話の基本料・オプション\n    - 例：基本料、ナンバーディスプレイ、転送電話\
+            \ など\n  - インターネット・フレッツ 関連\n    - 例：`光 with フレッツ利用料`\n         `光 with\
+            \ フレッツ（ファミリー）`\n         ` 光 IP1`\n         `フレッツ光利用料`\n         `フレッツ光ネクスト`\n\
+            \         `光回線利用料`\n         など、フレッツ・インターネット接続を示す行\n  - その他のオプションサービス・通話料など\n\
+            \n- 逆に、以下のような行は除外してください。\n  - 「消費税」「消費税相当額」「消費税額等」\n  - 「ユニバーサルサービス料」「電話リレーサービス料」\n\
+            \  - 「小計」「合計」「ご請求金額」「請求金額」などの集計行\n  - CAF番号など、管理用 ID だけの行\n\n3. **各列の割り当て**\n\
+            \n- 対象とするサービス行ごとに、次のように値を決めて出力してください。\n\n- 「番号」：\n  - そのブロックで特定した電話番号を入れます。\n\
+            - 「サービス」：\n  - サービス名（例：`基本料`、`ナンバーディスプレイ`、`転送電話`、\n    `光 with フレッツ利用料`、`フレッツ光利用料`\
+            \ など）。\n- 「金額(円)」：\n  - そのサービスの請求金額。カンマや「円」は除き半角数字だけにします。\n- 「備考」：\n \
+            \ - 同じエリアまたは見出しに書かれている利用期間\n    （例: `2025年6月1日～2025年6月30日` や `2025/06/01\
+            \ ～ 2025/06/30`）を入れます。\n  - 利用期間が特定できない場合は空欄 \"\" とします。\n\n==============================\n\
+            【3. 出力に関する制約】\n==============================\n\n- NTT関連のキーワードが無い場合は、**絶対に\
+            \ 1 文字も出力しない**こと。\n- 決してサンプルの請求書や例題を作成したり、入力にない電話番号・金額を出力したりしてはいけません。\n\
+            - 出力は `| 番号 | サービス | 金額(円) | 備考 |` 形式の行のみとし、それ以外は一切出力しないこと。\n"
+        - id: 4c3afb24-dc2a-40a6-a0ae-557653a58587
+          role: user
+          text: '{{#1763681364596.text#}}'
+        selected: false
+        title: NTT明細分析
+        type: llm
+        vision:
+          enabled: false
+      height: 124
+      id: '1764727102859'
+      position:
+        x: 981.3457842403321
+        y: 303
+      positionAbsolute:
+        x: 981.3457842403321
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4.1
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: c43d26a4-8a5f-44b1-be63-19610599ef1c
+          role: system
+          text: "あなたは大塚商会の請求書からデータを抽出するアシスタントです。\nこのノードには「株式会社 大塚商会」の請求書だけが入力される前提です。\n\
+            \n入力は PDF / 画像を OCR したテキストです。\n電話料金・保守料金・複合機カウンター料金の 3 パターンがあります。\n\n\
+            ==============================\n【1. 出力フォーマット】\n==============================\n\
+            \n次の 4 列を持つ Markdown 表の **データ行だけ** を出力してください。\n\n| 番号 | サービス | 金額(円) |\
+            \ 備考 |\n\n- **ヘッダー行（`| 番号 | サービス | …` の行）は絶対に出力しない**。\n- 各行は必ず  \n  `|\
+            \ 番号 | サービス | 金額(円) | 備考 |`  \n  の形式で出力すること。\n- 各行の前後に空行を入れないこと（連続した行だけにする）。\n\
+            - 表以外のテキスト（説明文、コメント、サンプル、コードブロック、\n  「入力：」「出力：」などのラベル）は一切出力してはいけません。\n\
+            - 「金額(円)」は、カンマや「円」などを除いた **半角数字のみ** とし、\n  マイナスは `-1234` のようにマイナス記号付きの数字にすること。\n\
+            \n==============================\n【2. 抽出対象と列の割り当て】\n==============================\n\
+            \n大塚商会の請求書には、主に次の 3 種類の明細があります。\n\n- A. 電話料金明細\n- B. 保守サービス料金（たよれーる、BroadBandルーター等）\n\
+            - C. 複合機（カウンタ料金・パフォーマンスチャージ等）\n\nそれぞれについて、列の割り当てルールを以下の通りにしてください。\n\n\
+            --------------------------------\n■ A. 電話料金明細\n--------------------------------\n\
+            - 「電話料金明細」「ご利用番号」「利用期間」などがあり、\n  基本料・通話料などが並んでいるブロック。\n\n【列の割り当て】\n\n\
+            - 「番号」：\n  - そのブロックの「ご利用番号」や電話番号（例：`03-XXXX-YYYY`）。\n- 「サービス」：\n  - 行に書かれているサービス名\n\
+            \    （例：`基本料`、`屋内配線使用料`、`ダイヤル通話料` など）。\n- 「金額(円)」：\n  - その行の金額。カンマと「円」を除いて半角数字だけにする。\n\
+            - 「備考」：\n  - 同じブロック内にある利用期間\n    （例：`2025年6月21日～7月20日`）を入れる。\n  - 利用期間が見つからない場合は空欄\
+            \ `\"\"` とする。\n\n--------------------------------\n■ B. 保守サービス料金（たよれーる\
+            \ 等）\n--------------------------------\n- 「たよれーる」「保守契約」「BroadBandルーター」など、\n\
+            \  ネットワーク機器の保守・サービス料金がまとまっているブロック。\n\n【列の割り当て】\n\n- 「番号」：\n  - 原則として請求書上部の「伝票番号」（例：`FS82753372`）。\n\
+            - 「サービス」：\n  - その伝票に対する代表的なサービス名を 1 行にまとめて入れる。\n    - 例：`たよれーる（保守契約）料金-有線BroadBandルーター～`\n\
+            - 「金額(円)」：\n  - 同じサービスグループに属する金額を **合計した金額**。\n- 「備考」：\n  - まず「設置住所」「設置場所」等があれば、その住所を入れる。\n\
+            \  - 住所が無い場合は「利用月」「請求期間」（例：`2025年7月分`）を入れる。\n  - どちらも無ければ空欄 `\"\"` とする。\n\
+            \n※ 同じ伝票番号に複数の保守サービスがあっても、\n   原則として 1 行に集約してよい。\n\n--------------------------------\n\
+            ■ C. 複合機（カウンタ料金・パフォーマンスチャージ等）\n--------------------------------\n- 「ご契約情報」「機種名」「ご請求金額内訳」などがあり、\n\
+            \  `パフォーマンスチャージ`, `モノカラー総出力`, `1-1000/月`,\n  `フルカラーコピー`, `フルカラープリント`,\
+            \ `カンタン私書箱AE2タイプF`\n  などの行が並んでいるブロック。\n\n【列の割り当て】\n\n- 「番号」：\n  - そのブロックの「機種名」（例：`IMC2500`、`IMC3000`）を入れる。\n\
+            - 「サービス」：\n  - 行に記載されている項目名そのもの\n    （例：`パフォーマンスチャージ`、`モノカラー総出力`、\n  \
+            \        `1－1000／月`、`1001－以上／月`、\n          `フルカラーコピー`、`フルカラープリント`、\n\
+            \          `カンタン私書箱AE2タイプF` など）。\n- 「金額(円)」：\n  - 「内訳金額」列に書かれている金額を半角数字で入れる。\n\
+            \  - 「単価／金額」しか無く、1 行分の金額が明らかな場合はその金額を入れてよい。\n- 「備考」：\n  - 可能であれば、単価・カウント情報をまとめて入れる。\n\
+            \    - 例：`単価: 1円, カウント: 4,974カウント`\n  - 情報が取りにくい場合は空欄 `\"\"` のままでよい。\n\
+            \n==============================\n【3. 除外する行】\n==============================\n\
+            \n大塚商会の明細に含まれていても、次のような行は出力してはいけません。\n\n- 「消費税」「消費税等」「小計」「合計」「ご請求金額」などの集計行\n\
+            - 「10％対象」「税区分」など税区分だけを示す行\n- 明細とは無関係な注意書き・キャンペーン案内・問い合わせ先など\n\n==============================\n\
+            【4. 出力に関する制約】\n==============================\n\n- 大塚商会以外の請求書テキストが入力された場合は、\n\
+            \  **必ず完全な空文字（何も出力しない状態）で終了する** こと。\n- 入力に無い電話番号・機種名・金額を、推測で新しく作成してはいけません。\n\
+            - 出力は `| 番号 | サービス | 金額(円) | 備考 |` 形式の行だけとし、\n  それ以外のテキストは一切出力しないこと。"
+        - id: 17dd083d-696d-4ee0-ae41-914b9b6f0f37
+          role: user
+          text: '{{#1763681364596.text#}}'
+        selected: false
+        title: 大塚商会 明細分析
+        type: llm
+        vision:
+          enabled: false
+      height: 124
+      id: '1764727111543'
+      position:
+        x: 981.3457842403321
+        y: 440.7103708419566
+      positionAbsolute:
+        x: 981.3457842403321
+        y: 440.7103708419566
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        selected: false
+        template: "| 番号 | サービス | 金額(円) | 備考 |\r\n| --- | --- | --- | --- |\r\n{%-\
+          \ if ntt_rows is string and ntt_rows|trim != '' %}\r\n{{ ntt_rows }}\r\n\
+          {%- endif %}\r\n{%- if otsuka_rows is string and otsuka_rows|trim != ''\
+          \ %}\r\n{{ otsuka_rows }}\r\n{%- endif %}\r\n{%- if nttbiz_rows is string\
+          \ and nttbiz_rows|trim != '' %}\r\n{{ nttbiz_rows }}\r\n{%- endif %}\r\n\
+          {%- if softbank_rows is string and softbank_rows|trim != '' %}\r\n{{ softbank_rows\
+          \ }}\r\n{%- endif %}\r\n{%- if forval_rows is string and forval_rows|trim\
+          \ != '' %}\r\n{{ forval_rows }}\r\n{%- endif %}\r\n{%- if other_rows is\
+          \ string and other_rows|trim != '' %}\r\n{{ other_rows }}\r\n{%- endif %}\r\
+          \n"
+        title: テンプレート 2
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1764727102859'
+          - text
+          value_type: string
+          variable: ntt_rows
+        - value_selector:
+          - '1764727111543'
+          - text
+          value_type: string
+          variable: otsuka_rows
+        - value_selector:
+          - '1764734254088'
+          - text
+          value_type: string
+          variable: nttbiz_rows
+        - value_selector:
+          - '1764734260045'
+          - text
+          value_type: string
+          variable: softbank_rows
+        - value_selector:
+          - '1764734264633'
+          - text
+          value_type: string
+          variable: forval_rows
+        - value_selector:
+          - '1764734382655'
+          - text
+          value_type: string
+          variable: other_rows
+      height: 52
+      id: '1764728717913'
+      position:
+        x: 1298.5188239542344
+        y: 303
+      positionAbsolute:
+        x: 1298.5188239542344
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4.1
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 462ecb44-c1aa-428d-864d-4c4b889b308d
+          role: system
+          text: "あなたは電話料金明細書からデータを抽出するアシスタントです。\nこのノードは「NTTドコモビジネス（OCNプロバイダ料金）」の明細だけを担当します。\n\
+            \n==============================\n【1. 出力フォーマット】\n==============================\n\
+            \n- 出力は次の4列を持つ Markdown 表の「データ行だけ」とします。\n\n  | 番号 | サービス | 金額(円) | 備考\
+            \ |\n\n- ヘッダー行（上の2行）は絶対に出力しない。\n- 各行の形式：`| 番号 | サービス | 金額(円) | 備考 |`\n\
+            - 表以外のテキスト（説明文、サンプル、「入力」「出力」、コードブロック ``` 等）は\n  一切出してはいけない。\n- 「金額(円)」はカンマや「円」を取り除いた半角数字のみ。\n\
+            \  必要なら `-1234` のようなマイナス記号付きも可。\n\n==============================\n【2.\
+            \ 抽出対象の明細と列の割り当て】\n==============================\n\n■ 2-1. 対象となるブロック\n\
+            \n- 「料金内訳書」「Telecommunications Bill Detail」などの見出しがあり、\n  その下に OCN 回線やオプションサービスが並んでいる表を対象とする。\n\
+            - 特に次のようなサービス名があれば優先的に対象とする：\n  - 「光『フレッツ』基本料」\n  - 「OCN ○○プラン」「OCN 光」\n\
+            \  - 「メールウイルスチェックサービス利用料」\n  - 「セキュリティオプション」など\n\n■ 2-2. 番号（左端の「番号」列）\n\
+            \n- 次のような番号を優先して「番号」とする：\n\n  1. OCN契約番号・請求番号など、英字「N」や数字から始まるID\n    \
+            \ - 例：`N170090928`\n  2. OCNに紐づく電話番号（`0X-XXXX-XXXX` 形式など）\n\n- 同じ番号のブロックに複数のサービス行がある場合は、\n\
+            \  そのサービス行ごとに同じ番号を繰り返してよい。\n\n■ 2-3. サービス・金額・備考\n\n- 対象行の判定：\n  - 「サービス名＋金額」が並んでいる行だけを対象とする。\n\
+            \  - 「消費税額等」「小計」「合計」「ご請求金額」\n    「ユニバーサルサービス料」など、税・手数料・集計行は除外する。\n\n-\
+            \ 各行の列の割り当て：\n  - 「サービス」：\n    - その行に書かれているサービス名（例：`光「フレッツ」基本料`、`メールウイルスチェックサービス利用料`）。\n\
+            \  - 「金額(円)」：\n    - その行の請求金額。カンマと「円」を除いて半角数字のみ。\n  - 「備考」：\n    - 「ご請求年月」「Billing\
+            \ Month」などの請求月（例：`2025年7月`）\n      や、「ご利用期間のお知らせ」欄にまとまって書かれている利用期間\n \
+            \     （例：`2025/07/01 ～ 2025/07/31`）を簡潔に入れる。\n    - 明細内に OCN回線の設置場所・設置住所が明記されている場合は、\n\
+            \      利用期間よりも **設置住所を優先** して記入する。\n    - どちらも見つからない場合は空欄 \"\" とする。\n\n\
+            ==============================\n【3. 追加の禁止事項】\n==============================\n\
+            \n- 「入力：」「出力：」「Input:」「Output:」というラベルを含む文章を出さない。\n- ``` で囲まれたコードブロックを使わない。\n\
+            - few-shot のような例題テキストを自分で作らない。\n- 出力は `| 番号 | サービス | 金額(円) | 備考 |` 形式の行のみとする。\n"
+        - id: 317883c1-c797-4826-9fa4-9785158d7109
+          role: user
+          text: '{{#1763681364596.text#}}'
+        selected: false
+        title: NTTドコモビジネス　明細分析
+        type: llm
+        vision:
+          enabled: false
+      height: 124
+      id: '1764734254088'
+      position:
+        x: 981.3457842403321
+        y: 589.6149274959374
+      positionAbsolute:
+        x: 981.3457842403321
+        y: 589.6149274959374
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4.1
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: ede460d6-3360-43d0-8116-0704257524dc
+          role: system
+          text: "あなたは電話料金明細書からデータを抽出するアシスタントです。\nこのノードは「SoftBank（固定回線・携帯回線を含む）」の明細だけを担当します。\n\
+            \n==============================\n【1. 出力フォーマット】\n==============================\n\
+            \n- 出力は次の4列を持つ Markdown 表の「データ行だけ」。\n\n  | 番号 | サービス | 金額(円) | 備考 |\n\n\
+            - ヘッダー行は絶対に出力しない。\n- 各行の形式：`| 番号 | サービス | 金額(円) | 備考 |`\n- 表以外（説明・サンプル・「入力」「出力」・コードブロック等）は一切禁止。\n\
+            - 「金額(円)」はカンマ・「円」を除いた半角数字のみ。\n\n==============================\n【2. 抽出ルール】\n\
+            ==============================\n\n■ 2-1. 番号の特定\n\n- 次のラベル近くの番号を「番号」として扱う：\n\
+            \  - 「ご利用番号」\n  - 「回線番号」\n  - 「電話番号」\n  - 「携帯電話番号」\n- 形式は `0X0-XXXX-XXXX`\
+            \ などの電話番号形式が多い。\n- 1つの番号に対して複数の料金項目があれば、\n  それぞれの行に同じ番号を入れてよい。\n\n■ 2-2.\
+            \ 対象となるサービス行\n\n- 「基本料」「定額料」「データ定額」「通話料」「オプションサービス」など、\n  料金項目と金額が並んでいる行を対象とする。\n\
+            - 以下の行は除外する：\n  - 「消費税」「消費税相当額」\n  - 「ユニバーサルサービス料」\n  - 「小計」「合計」「ご請求金額」\n\
+            \  - ポイント調整など明らかに集計・調整だけの行\n\n■ 2-3. 各列の割り当て\n\n- 「番号」：2-1 で特定した回線番号／ご利用番号。\n\
+            - 「サービス」：料金項目名（例：`ホワイトプラン基本料`、`通話料`、`データ定額パック`）。\n- 「金額(円)」：その行の請求金額（カンマと「円」を除く半角数字）。\n\
+            - 「備考」：\n  - 近くに「ご利用期間」「ご利用月」「○月分」などがあれば、その期間・月を入れる。\n    - 例：`2025年7月1日～2025年7月31日`、`2025年7月分`\n\
+            \  - 明細内に設置場所や住所が書かれている場合は、期間よりも住所を優先して入れてよい。\n  - どちらもなければ空欄 \"\" とする。\n\
+            \n==============================\n【3. 追加の禁止事項】\n==============================\n\
+            \n- 「入力」「出力」「Input」「Output」というラベルを含む文章を出さない。\n- ``` で囲んだコードブロックを出さない。\n\
+            - 例題として架空のSoftBank請求書を生成しない。\n- 出力は `| 番号 | サービス | 金額(円) | 備考 |` 形式の行だけとする。\n"
+        - id: 9bf734a0-e74f-45a0-85f5-32491517d7af
+          role: user
+          text: '{{#1763681364596.text#}}'
+        selected: false
+        title: SoftBank　明細分析
+        type: llm
+        vision:
+          enabled: false
+      height: 124
+      id: '1764734260045'
+      position:
+        x: 981.3457842403321
+        y: 722.0635181658233
+      positionAbsolute:
+        x: 981.3457842403321
+        y: 722.0635181658233
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4.1
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 9e9995bb-3ca1-4628-8425-75d0f85ce759
+          role: system
+          text: "あなたは電話料金明細書からデータを抽出するアシスタントです。\nこのノードは「フォーバルテレコム（FORVAL TELECOM）」の明細だけを担当します。\n\
+            \n==============================\n【1. 出力フォーマット】\n==============================\n\
+            \n- 出力は次の4列を持つ Markdown 表の「データ行だけ」。\n\n  | 番号 | サービス | 金額(円) | 備考 |\n\n\
+            - ヘッダー行は出さない。\n- 各行：`| 番号 | サービス | 金額(円) | 備考 |`\n- 表以外（説明・サンプル・「入力」「出力」・コードブロック\
+            \ 等）は禁止。\n- 「金額(円)」はカンマ・「円」を除いた半角数字のみ（マイナスも可）。\n\n==============================\n\
+            【2. グループ構造と列の割り当て】\n==============================\n\n■ 2-1. 【〜】で囲まれた見出しごとにグループ化\n\
+            \n- 行頭が「【」で始まり「】」で終わるテキスト\n  （例：`【株式会社フォーバル】`、`【株式会社フォーバルテレコム】`）を「グループ見出し」とする。\n\
+            - グループ見出しの直後から、次の見出しまたは表の終わりまでの行を、そのグループに属する明細行とみなす。\n\n■ 2-2. 各列の割り当て\n\
+            \n- 「番号」：\n  - グループ見出しの【と】の内側の文字列をそのグループの「番号」として使う。\n    - 例：`【株式会社フォーバルテレコム】`\
+            \ → 番号：`株式会社フォーバルテレコム`\n- 「サービス」：\n  - グループ内の各行に書かれているサービス名。\n    - 例：`アイコンサポート`、`iSmartひかり`、`調整金等`\
+            \ など。\n- 「金額(円)」：\n  - 対応する「請求額」や金額欄に書かれている数値を使用する。\n  - カンマ・「円」を除いた半角数字のみ。\n\
+            \  - マイナス金額（値引き・調整金）は `-1234` のようにマイナス付きの数字にする。\n- 「備考」：\n  - グループ内または周辺に「設置場所」「設置住所」「ご利用場所」などがあれば、その住所を最優先で記入する。\n\
+            \  - 住所がない場合は、その行や見出しに書かれている利用期間・月（`2025年7月分` など）を入れる。\n  - どちらもなければ空欄\
+            \ \"\" とする。\n\n■ 2-3. 除外する行\n\n- 「10％対象」「非課税」など税区分だけの行。\n- 「小計」「合計」「ご請求金額」などの集計行。\n\
+            - 管理用IDや伝票番号だけの行。\n\n==============================\n【3. 追加の禁止事項】\n==============================\n\
+            \n- 「入力」「出力」「Input」「Output」などのラベルを含む文章を出さない。\n- ``` で囲まれたコードブロックを出さない。\n\
+            - フォーバルの架空の明細サンプルを生成しない。\n- 出力は `| 番号 | サービス | 金額(円) | 備考 |` 形式の行だけとする。\n"
+        - id: e13225a2-5a46-43f5-87c8-5ba9c7bf06f8
+          role: user
+          text: '{{#1763681364596.text#}}'
+        selected: false
+        title: フォーバルテレコム　明細分析
+        type: llm
+        vision:
+          enabled: false
+      height: 124
+      id: '1764734264633'
+      position:
+        x: 981.3457842403321
+        y: 864.4312315237253
+      positionAbsolute:
+        x: 981.3457842403321
+        y: 864.4312315237253
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        error_strategy: fail-branch
+        model:
+          completion_params: {}
+          mode: chat
+          name: gpt-4.1
+          provider: langgenius/openai/openai
+        prompt_template:
+        - id: 7a97187d-12f6-428f-9769-1c3516ef8f84
+          role: system
+          text: "あなたは電話料金明細書からデータを抽出するアシスタントです。\nこのノードは「NTT系・ドコモ・SoftBank・フォーバル・大塚商会など、他の専用ノードで扱わない会社」の明細を担当します。\n\
+            \n==============================\n【1. 出力フォーマット】\n==============================\n\
+            \n- 出力は次の4列を持つ Markdown 表の「データ行だけ」。\n\n  | 番号 | サービス | 金額(円) | 備考 |\n\n\
+            - ヘッダー行は出さない。\n- 各行：`| 番号 | サービス | 金額(円) | 備考 |`\n- 表以外（説明・サンプル・「入力」「出力」・コードブロック\
+            \ 等）は禁止。\n- 「金額(円)」はカンマ・「円」を除いた半角数字のみ（マイナスも可）。\n\n==============================\n\
+            【2. 汎用的な抽出ルール】\n==============================\n\n■ 2-1. 番号の候補\n\n- 次のような文字列から、そのブロックの代表的な「番号」を推測してよい：\n\
+            \  - 「お客さま番号」「ご利用番号」「電話番号」「回線番号」付近の `0X-XXXX-XXXX`／`0XX-XXX-XXXX` 形式の番号。\n\
+            \  - 明細のヘッダー付近にある契約番号・伝票番号（英数字混在のID）。\n- 明細ブロックごとに最も代表的な番号を1つ選ぶ。\n  どうしても特定できない場合は、番号を空欄\
+            \ \"\" としてもよい。\n\n■ 2-2. サービス行の検出\n\n- 「サービス名＋金額」が並んでいる行をサービス行とみなす。\n\
+            \  - 例：基本料、通話料、インターネット接続料、オプションサービス名など。\n- 次のような行は除外する：\n  - 「消費税」「小計」「合計」「ご請求金額」\n\
+            \  - 「ユニバーサルサービス料」などの税・手数料\n  - 明らかに管理用IDだけの行\n\n■ 2-3. 各列の割り当て\n\n- 「番号」：\n\
+            \  - 2-1 で特定した番号。特定できない場合は空欄 \"\" でもよい。\n- 「サービス」：\n  - その行の料金項目名（例：`基本料`、`国内通話料`、`インターネット接続料`\
+            \ 等）。\n- 「金額(円)」：\n  - その行の金額。カンマ・「円」を除いた半角数字。\n- 「備考」：\n  - その行または近くに書かれている利用期間（例：`2025年7月1日～2025年7月31日`）や利用月（`2025年7月分`）があれば入れる。\n\
+            \  - 明細内に設置場所・設置住所があれば、期間よりも住所を優先して入れてよい。\n  - どちらも無ければ空欄 \"\" とする。\n\n\
+            ==============================\n【3. 追加の禁止事項】\n==============================\n\
+            \n- 「入力」「出力」「Input」「Output」というラベルを含む文章を出さない。\n- ``` で囲んだコードブロックを出さない。\n\
+            - 架空の会社やサンプル明細を作成しない。\n- 出力は `| 番号 | サービス | 金額(円) | 備考 |` 形式の行だけとする。\n"
+        - id: 30ba9794-5dc6-40d3-aef0-2020ace34ba5
+          role: user
+          text: '{{#1763681364596.text#}}'
+        selected: false
+        title: その他の会社 明細分析
+        type: llm
+        vision:
+          enabled: false
+      height: 124
+      id: '1764734382655'
+      position:
+        x: 981.3457842403321
+        y: 1024.0684731762965
+      positionAbsolute:
+        x: 981.3457842403321
+        y: 1024.0684731762965
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: contains
+            id: d60b5c05-2d6d-4bf1-b2d8-f087d6a295ce
+            value: NTT東日本
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: b757c7c5-e50f-4c0b-a0e7-fd2c7d2043f3
+            value: NTT西日本
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: 26cc398e-f9c5-480f-8b47-9bc16b8c6ee9
+            value: NTT Communications
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          id: 'true'
+          logical_operator: or
+        - case_id: f4afebb4-bceb-4231-ac28-38912b37c81b
+          conditions:
+          - comparison_operator: contains
+            id: 404aca5d-09e7-465c-b638-bc40867e969d
+            value: 大塚商会
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          id: f4afebb4-bceb-4231-ac28-38912b37c81b
+          logical_operator: and
+        - case_id: f2ad7b7d-3628-4778-babc-4a22a21d2860
+          conditions:
+          - comparison_operator: contains
+            id: 6a0a0a4e-0595-4fc9-8233-92f0a305091c
+            value: NTTドコモビジネス
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: d7cfe751-8eb7-4da2-a902-44dcdc837c9a
+            value: docomo Business
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: 79f718bb-4346-48d5-8319-d007a6832032
+            value: OCN
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: 03ddd8db-1f68-457f-918b-7ee48cf31e84
+            value: ＯＣＮ
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          id: f2ad7b7d-3628-4778-babc-4a22a21d2860
+          logical_operator: or
+        - case_id: 6bb496c6-cd89-4d53-a0d1-4b7588e133e9
+          conditions:
+          - comparison_operator: contains
+            id: 90f620fc-817c-4e93-8df3-ffe7c67dc310
+            value: SoftBank
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: 2c8396ee-caf8-44e0-b0a7-6e0d0e537680
+            value: ソフトバンク
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          id: 6bb496c6-cd89-4d53-a0d1-4b7588e133e9
+          logical_operator: or
+        - case_id: 2ccce32e-6f71-4608-829a-70ef984196fa
+          conditions:
+          - comparison_operator: contains
+            id: c1ba0330-5213-4f48-a287-dd6a2371ea85
+            value: フォーバル
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          - comparison_operator: contains
+            id: f244ffb0-e58a-49f0-b47e-eb5fef516406
+            value: FORVAL
+            varType: string
+            variable_selector:
+            - '1763681364596'
+            - text
+          id: 2ccce32e-6f71-4608-829a-70ef984196fa
+          logical_operator: or
+        selected: false
+        title: IF/ELSE
+        type: if-else
+      height: 498
+      id: '1764739779573'
+      position:
+        x: 685.8866978003152
+        y: 303
+      positionAbsolute:
+        x: 685.8866978003152
+        y: 303
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 242
+    - data:
+        author: 三宅 良昌
+        desc: ''
+        height: 205
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"OCRで読み取った後に","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"IF/ELSEで分岐","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"NTTの明細にOCNとか入っていると2行出てしまうのでNTT明細分析の指示文から","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"OCN光withフレッツ","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"とかある場合は光withフレッツだけ抽出するようにしてある","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 205
+      id: '1764741514006'
+      position:
+        x: 685.8866978003152
+        y: 73.6912864687444
+      positionAbsolute:
+        x: 685.8866978003152
+        y: 73.6912864687444
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    - data:
+        author: 三宅 良昌
+        desc: ''
+        height: 207
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"モデルはgpt-4.1が最速","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"（但し100Kまでなのでページ枚数が多いとエラー出る）","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"gpt-5は頭がいいけど、めちゃ遅い","type":"text","version":1}],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0,"textStyle":""}],"direction":null,"format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 240
+      height: 207
+      id: '1764744992444'
+      position:
+        x: 984.1259329803244
+        y: 72.49639298311808
+      positionAbsolute:
+        x: 984.1259329803244
+        y: 72.49639298311808
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 240
+    viewport:
+      x: -25.471866144427395
+      y: -33.024636191232844
+      zoom: 0.8705505632961249
+  rag_pipeline_variables: []
