@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}管理者ログイン - 明細抽出くん{% endblock %}
+{% block header %}管理者ログイン{% endblock %}
+{% block content %}
+<div class="card">
+    {% if error %}
+    <div class="alert alert-error">{{ error }}</div>
+    {% endif %}
+    <form method="post" action="/admin/login">
+        <div class="form-group">
+            <label for="password">管理者パスワード</label>
+            <input type="password" id="password" name="password" required autofocus>
+        </div>
+        <button type="submit" class="btn btn-primary">ログイン</button>
+    </form>
+</div>
+{% endblock %}

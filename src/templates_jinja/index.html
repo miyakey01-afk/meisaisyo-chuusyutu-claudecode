@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}明細抽出くん Ver2{% endblock %}
+{% block header %}明細抽出くん Ver2{% endblock %}
+{% block content %}
+<p>電話料金の明細書（PDF・画像）をアップロードすると、Excelファイルに変換してGoogle Driveに保存します。</p>
+
+<div class="card" id="upload-area">
+    <form id="upload-form">
+        <div class="drop-zone" id="drop-zone">
+            <p>ファイルをドラッグ&ドロップ<br>または</p>
+            <label class="btn btn-primary" for="file-input">ファイルを選択</label>
+            <input type="file" id="file-input" name="files" multiple accept=".pdf,.jpg,.jpeg,.png,.gif,.webp,.svg" hidden>
+            <p class="hint">PDF・画像（同時10枚まで）</p>
+        </div>
+        <div id="file-list"></div>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn" disabled>アップロードして抽出</button>
+    </form>
+</div>
+
+<div class="card hidden" id="processing">
+    <div class="spinner"></div>
+    <p>処理中です。しばらくお待ちください...</p>
+    <p class="hint">OCR → 会社判定 → 明細分析 → Excel変換 → Google Drive保存</p>
+</div>
+
+<div class="card hidden" id="result">
+    <h2>処理完了</h2>
+    <p><a id="drive-link" href="" target="_blank" class="btn btn-primary">Google Drive で開く</a></p>
+    <p id="result-filename"></p>
+    <button class="btn btn-secondary" onclick="resetForm()">別のファイルを処理</button>
+</div>
+
+<div class="card hidden" id="error">
+    <h2>エラー</h2>
+    <pre id="error-message"></pre>
+    <button class="btn btn-secondary" onclick="resetForm()">やり直す</button>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="/static/app.js"></script>
+{% endblock %}
