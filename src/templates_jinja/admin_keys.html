@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}APIキー管理 - 明細抽出くん{% endblock %}
+{% block header %}APIキー管理{% endblock %}
+{% block content %}
+{% if message %}
+<div class="alert alert-success">{{ message }}</div>
+{% endif %}
+
+<div class="card">
+    <h2>Google API Key (Gemini OCR用)</h2>
+    <p class="status">
+        状態:
+        {% if google_configured %}
+            <span class="badge badge-ok">設定済 {{ google_preview }}</span>
+        {% else %}
+            <span class="badge badge-ng">未設定</span>
+        {% endif %}
+    </p>
+    <form method="post" action="/admin/api/keys">
+        <input type="hidden" name="key_type" value="google">
+        <div class="form-group">
+            <input type="password" name="key_value" placeholder="Google API Key を入力" required>
+        </div>
+        <button type="submit" class="btn">更新</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>OpenAI API Key (GPT-4.1 分析用)</h2>
+    <p class="status">
+        状態:
+        {% if openai_configured %}
+            <span class="badge badge-ok">設定済 {{ openai_preview }}</span>
+        {% else %}
+            <span class="badge badge-ng">未設定</span>
+        {% endif %}
+    </p>
+    <form method="post" action="/admin/api/keys">
+        <input type="hidden" name="key_type" value="openai">
+        <div class="form-group">
+            <input type="password" name="key_value" placeholder="OpenAI API Key を入力" required>
+        </div>
+        <button type="submit" class="btn">更新</button>
+    </form>
+</div>
+
+<div class="card">
+    <h2>Google Drive フォルダID</h2>
+    <form method="post" action="/admin/drive-folder">
+        <div class="form-group">
+            <input type="text" name="folder_id" value="{{ drive_folder_id }}" required>
+        </div>
+        <button type="submit" class="btn">更新</button>
+    </form>
+</div>
+
+<div class="card">
+    <form method="post" action="/admin/logout">
+        <button type="submit" class="btn btn-secondary">ログアウト</button>
+    </form>
+</div>
+{% endblock %}
