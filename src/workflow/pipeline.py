@@ -37,6 +37,11 @@ ERROR_MESSAGE_API_KEY = """\
 APIキーが無効または期限切れです。
 管理者に連絡してAPIキーを確認してください。"""
 
+ERROR_MESSAGE_QUOTA = """\
+APIの利用枠（クォータ）を超過しました。
+OpenAIのクレジット残高を確認し、必要に応じて追加してください。
+https://platform.openai.com/account/billing"""
+
 ERROR_MESSAGE_NETWORK = """\
 外部サービスへの通信に失敗しました。
 しばらく待ってから再度お試しください。"""
@@ -62,7 +67,13 @@ def _classify_cause(cause: BaseException | None) -> str:
     # OpenAI errors (AnalysisError の中)
     if isinstance(cause, OpenAIAuthError):
         return "api_key"
-    if isinstance(cause, (OpenAIConnectionError, OpenAITimeoutError, OpenAIRateLimitError)):
+    if isinstance(cause, OpenAIRateLimitError):
+        body = getattr(cause, "body", None) or {}
+        error = body.get("error", {}) if isinstance(body, dict) else {}
+        if error.get("code") == "insufficient_quota" or error.get("type") == "insufficient_quota":
+            return "quota"
+        return "network"
+    if isinstance(cause, (OpenAIConnectionError, OpenAITimeoutError)):
         return "network"
 
     # Google Gemini errors (OCRError の中)
@@ -156,6 +167,7 @@ async def process_bill(
         )
         message = {
             "api_key": ERROR_MESSAGE_API_KEY,
+            "quota": ERROR_MESSAGE_QUOTA,
             "network": ERROR_MESSAGE_NETWORK,
             "file_too_large": ERROR_MESSAGE_FILE_TOO_LARGE,
         }.get(category, ERROR_MESSAGE_FILE_TOO_LARGE)
