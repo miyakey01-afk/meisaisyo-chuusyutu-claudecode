@@ -1,3 +1,4 @@
+import logging
 import pathlib
 from typing import List
 
@@ -10,6 +11,8 @@ from src.admin.routes import admin_router
 from src.config import settings
 from src.secrets.manager import secret_manager
 from src.workflow.pipeline import process_bill
+
+logger = logging.getLogger(__name__)
 
 BASE_DIR = pathlib.Path(__file__).resolve().parent
 TEMPLATES_DIR = BASE_DIR / "templates_jinja"
@@ -74,7 +77,14 @@ async def extract_bill(files: List[UploadFile] = File(...)):
         file_data.append((f.filename, content))
 
     # パイプライン実行
+    filenames = [f.filename for f in files]
+    logger.info("パイプライン開始: files=%s, drive_folder_id=%s", filenames, drive_folder_id)
     result = await process_bill(file_data, google_key, openai_key, drive_folder_id)
+
+    if result.success:
+        logger.info("パイプライン成功: filename=%s", result.filename)
+    else:
+        logger.warning("パイプライン失敗: error_message=%s", result.error_message)
 
     return JSONResponse(
         content={
