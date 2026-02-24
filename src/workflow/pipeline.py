@@ -1,6 +1,13 @@
 import logging
 from dataclasses import dataclass
 
+from openai import AuthenticationError as OpenAIAuthError
+from openai import APIConnectionError as OpenAIConnectionError
+from openai import APITimeoutError as OpenAITimeoutError
+from openai import RateLimitError as OpenAIRateLimitError
+from google.genai.errors import ClientError as GenaiClientError
+from google.genai.errors import ServerError as GenaiServerError
+
 from src.workflow.ocr import ocr_extract, OCRError
 from src.workflow.router import detect_company, CompanyType
 from src.workflow.analyzer import analyze_bill, AnalysisError
@@ -10,8 +17,7 @@ from src.drive.uploader import upload_to_drive, generate_filename, DriveUploadEr
 
 logger = logging.getLogger(__name__)
 
-# DSL テンプレートノード 1764721294262 のエラーメッセージをそのまま使用
-ERROR_MESSAGE = """\
+ERROR_MESSAGE_FILE_TOO_LARGE = """\
 ファイルの処理に失敗しました。
 
 PDFや画像の容量が大きすぎる、またはページ数が多すぎる可能性があります。
@@ -25,10 +31,67 @@ PDFや画像の容量が大きすぎる、またはページ数が多すぎる�
 
 その他、うまく行かない場合は三宅まで連絡下さい"""
 
-DRIVE_ERROR_MESSAGE = """\
-Google Driveへのアップロードに失敗しました。\
-しばらく待ってから再度お試しください。\
-それでも解決しない場合は三宅まで連絡下さい。"""
+ERROR_MESSAGE_API_KEY = """\
+APIキーが無効または期限切れです。
+管理者に連絡してAPIキーを確認してください。"""
+
+ERROR_MESSAGE_QUOTA = """\
+APIの利用枠（クォータ）を超過しました。
+OpenAIのクレジット残高を確認し、必要に応じて追加してください。
+https://platform.openai.com/account/billing"""
+
+ERROR_MESSAGE_NETWORK = """\
+外部サービスへの通信に失敗しました。
+しばらく待ってから再度お試しください。"""
+
+ERROR_MESSAGE_EMPTY_RESULT = """\
+データが抽出できませんでした。
+ファイルの内容を確認し、明細書が含まれているか確認してください。"""
+
+ERROR_MESSAGE_DRIVE_UPLOAD = """\
+Google Driveへのアップロードに失敗しました。
+しばらく待ってから再度お試しください。それでも解決しない場合は三宅まで連絡下さい。"""
+
+ERROR_MESSAGE_UNKNOWN = """\
+予期しないエラーが発生しました。
+三宅まで連絡下さい。"""
+
+
+def _classify_cause(cause: BaseException | None) -> str:
+    """ラップされた例外の __cause__ を検査してエラー種別を返す。"""
+    if cause is None:
+        return "unknown"
+
+    # OpenAI errors (AnalysisError の中)
+    if isinstance(cause, OpenAIAuthError):
+        return "api_key"
+    if isinstance(cause, OpenAIRateLimitError):
+        body = getattr(cause, "body", None) or {}
+        error = body.get("error", {}) if isinstance(body, dict) else {}
+        if error.get("code") == "insufficient_quota" or error.get("type") == "insufficient_quota":
+            return "quota"
+        return "network"
+    if isinstance(cause, (OpenAIConnectionError, OpenAITimeoutError)):
+        return "network"
+
+    # Google Gemini errors (OCRError の中)
+    if isinstance(cause, GenaiClientError):
+        code = getattr(cause, "code", 0)
+        status = str(getattr(cause, "status", ""))
+        message = str(getattr(cause, "message", ""))
+        if code in (401, 403) or "API_KEY_INVALID" in status or "API_KEY_INVALID" in message:
+            return "api_key"
+        if code == 429:
+            return "network"
+        return "file_too_large"
+    if isinstance(cause, GenaiServerError):
+        return "network"
+
+    # Python built-in の接続エラー
+    if isinstance(cause, (ConnectionError, TimeoutError, OSError)):
+        return "network"
+
+    return "unknown"
 
 
 @dataclass
@@ -98,12 +161,32 @@ async def process_bill(
             filename=filename,
         )
 
+    except EmptyResultError as e:
+        logger.warning("Pipeline failed: empty result. %s", e)
+        return PipelineResult(success=False, error_message=ERROR_MESSAGE_EMPTY_RESULT)
+
+    except (OCRError, AnalysisError) as e:
+        category = _classify_cause(e.__cause__)
+        logger.error(
+            "Pipeline failed at %s: %s (cause: %s, category: %s)",
+            type(e).__name__, e, e.__cause__, category,
+        )
+        message = {
+            "api_key": ERROR_MESSAGE_API_KEY,
+            "quota": ERROR_MESSAGE_QUOTA,
+            "network": ERROR_MESSAGE_NETWORK,
+            "file_too_large": ERROR_MESSAGE_FILE_TOO_LARGE,
+        }.get(category, ERROR_MESSAGE_FILE_TOO_LARGE)
+        return PipelineResult(success=False, error_message=message)
+
+    except ValueError as e:
+        logger.warning("Pipeline failed: xlsx conversion error. %s", e)
+        return PipelineResult(success=False, error_message=ERROR_MESSAGE_EMPTY_RESULT)
+
     except DriveUploadError as e:
-        logger.error("Google Driveアップロード失敗: %s", e, exc_info=True)
-        return PipelineResult(success=False, error_message=DRIVE_ERROR_MESSAGE)
-    except (OCRError, AnalysisError, EmptyResultError, ValueError) as e:
-        logger.error("パイプライン処理エラー: %s", e, exc_info=True)
-        return PipelineResult(success=False, error_message=ERROR_MESSAGE)
+        logger.error("Pipeline failed: Drive upload error. %s", e, exc_info=True)
+        return PipelineResult(success=False, error_message=ERROR_MESSAGE_DRIVE_UPLOAD)
+
     except Exception as e:
-        logger.error("パイプライン予期せぬエラー: %s", e, exc_info=True)
-        return PipelineResult(success=False, error_message=ERROR_MESSAGE)
+        logger.exception("Pipeline failed: unexpected error.")
+        return PipelineResult(success=False, error_message=ERROR_MESSAGE_UNKNOWN)
